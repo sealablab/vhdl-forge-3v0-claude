@@ -1,0 +1,21 @@
+Test run started: Sun Nov  9 03:20:04 UTC 2025
+  Failure type: LLVM library missing
+forge_util_clk_divider|utilities|FAIL|0s|1
+  Failure type: VHDL compilation error
+forge_lut_pkg|packages|FAIL|0s|1
+  Failure type: LLVM library missing
+forge_voltage_3v3_pkg|packages|FAIL|1s|1
+  Failure type: LLVM library missing
+forge_voltage_5v0_pkg|packages|FAIL|0s|1
+  Failure type: LLVM library missing
+forge_voltage_5v_bipolar_pkg|packages|FAIL|1s|1
+  Failure type: LLVM library missing
+forge_hierarchical_encoder|debugging|FAIL|0s|1
+  Failure type: Missing source files
+platform_bpd_deployment|platform|FAIL|0s|1
+  Failure type: Missing source files
+platform_counter_poc|platform|FAIL|1s|1
+  Failure type: Missing source files
+platform_oscilloscope_capture|platform|FAIL|0s|1
+  Failure type: Missing source files
+platform_routing_integration|platform|FAIL|0s|1
