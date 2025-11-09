@@ -21,14 +21,37 @@ Reports use timestamp-based naming: `YYYY-MM-DD-HH-MM-SS.md`
 
 ## How to Generate a Report
 
-1. **Copy the diagnostic system prompt** from `docs/DIAGNOSTIC_SYSTEM_PROMPT.md`
+**Two versions available:**
+
+### Version 2.0 (RECOMMENDED - Automated Script Support)
+1. **Copy the diagnostic system prompt** from `docs/DIAGNOSTIC_SYSTEM_PROMPT_V2.md`
 2. **Paste into Claude Code** (web or desktop)
 3. **Claude will automatically:**
+   - Check for automated scripts (`scripts/setup.sh`, `scripts/validate_setup.sh`)
+   - Run automated validation if scripts available
+   - Fall back to manual diagnostics if needed
+   - Generate report in this directory
+   - Provide actionable recommendations (prioritizing automated fixes)
+
+**Use v2.0 when:**
+- Repository has automated setup scripts (commits after bbf3337)
+- Want fastest diagnostic with automated fixes
+- Need comprehensive validation
+
+### Version 1.0 (Manual Workflow)
+1. **Copy the diagnostic system prompt** from `docs/DIAGNOSTIC_SYSTEM_PROMPT.md`
+2. **Paste into Claude Code** (web or desktop)
+3. **Claude will manually:**
    - Run all diagnostic phases
    - Capture output
    - Analyze results
    - Generate report in this directory
    - Provide actionable recommendations
+
+**Use v1.0 when:**
+- Repository does not have automated scripts
+- Need detailed manual diagnostics
+- Debugging script issues
 
 ## Report Structure
 
@@ -41,11 +64,12 @@ Each report contains:
 
 ## Latest Reports
 
-- **2025-11-09-00:58:41** - Initial diagnostic run (⚠️ WARNINGS)
+- **2025-11-09-00:58:41** - Initial diagnostic run (⚠️ WARNINGS) [v1.0 format]
   - Status: Package structure ✅, imports ✅, test runner ✅, GHDL ❌
   - Blocking: GHDL not installed
   - Resolution: Install GHDL via package manager
   - Notes: Verified package structure fix from commit 6069c49
+  - Format: v1.0 (manual workflow - predates automated scripts)
 
 ## Usage Patterns
 
@@ -69,10 +93,38 @@ Each report contains:
 - Compare reports across commits
 - Track environment stability
 
+## Report Versions
+
+### Version 2.0 (Current - 2025-11-09+)
+- **New in v2.0:** Automated script integration
+- **Features:**
+  - Checks for `scripts/setup.sh` and `scripts/validate_setup.sh`
+  - Runs automated validation when available
+  - Falls back to manual workflow if scripts missing
+  - Prioritizes automated fixes in recommendations
+- **When:** Use for repositories with automated setup scripts (commits after bbf3337)
+- **Prompt:** `docs/DIAGNOSTIC_SYSTEM_PROMPT_V2.md`
+
+### Version 1.0 (Original - 2025-11-08)
+- **Features:**
+  - Manual diagnostic workflow (Phases 1-6)
+  - Comprehensive manual checks
+  - Detailed troubleshooting
+- **When:** Use for repositories without automated scripts, or debugging script issues
+- **Prompt:** `docs/DIAGNOSTIC_SYSTEM_PROMPT.md`
+
+**Backward Compatibility:** Both versions generate compatible reports. v2.0 adds automation metadata.
+
+---
+
 ## Integration with Documentation
 
 Diagnostic reports reference:
+- `docs/DIAGNOSTIC_SYSTEM_PROMPT_V2.md` - v2.0 diagnostic prompt (RECOMMENDED)
+- `docs/DIAGNOSTIC_SYSTEM_PROMPT.md` - v1.0 diagnostic prompt (fallback)
 - `docs/SETUP_IMPROVEMENTS.md` - Known issues and fixes
+- `scripts/setup.sh` - Automated setup script
+- `scripts/validate_setup.sh` - Automated validation script
 - `SPEC.md` - System requirements
 - `CLAUDE.md` - Development environment setup
 
@@ -90,5 +142,8 @@ Diagnostic reports reference:
 ---
 
 **Created:** 2025-11-08
+**Last Updated:** 2025-11-09 (added v2.0 support)
 **Maintainer:** VHDL-FORGE Team
-**Related:** `docs/DIAGNOSTIC_SYSTEM_PROMPT.md`
+**Related:**
+- `docs/DIAGNOSTIC_SYSTEM_PROMPT_V2.md` (current)
+- `docs/DIAGNOSTIC_SYSTEM_PROMPT.md` (v1.0 fallback)
