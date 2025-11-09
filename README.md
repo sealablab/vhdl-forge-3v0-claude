@@ -48,12 +48,73 @@ Token-efficient CocoTB testing with **98% output reduction**:
 
 ## 🚀 Quick Start
 
+### Prerequisites
+
+Before starting, ensure these dependencies are installed:
+
+#### GHDL (VHDL Simulator) - REQUIRED
+```bash
+# Ubuntu/Debian
+sudo apt-get update
+sudo apt-get install -y ghdl ghdl-llvm
+
+# macOS
+brew install ghdl
+
+# Verify installation
+ghdl --version  # Should show 4.0+
+```
+
+#### Python 3.10+ - REQUIRED
+```bash
+# Ubuntu/Debian
+sudo apt-get install python3 python3-pip
+
+# macOS
+brew install python@3.11
+
+# Verify
+python3 --version  # Should show 3.10 or higher
+```
+
+#### uv (Fast Python Package Manager) - REQUIRED
+```bash
+# Install via curl (all platforms)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Or via pip
+pip install uv
+
+# Verify
+uv --version
+```
+
 ### Installation
 
+**Option 1: Automated Setup (Recommended)**
+```bash
+git clone https://github.com/sealablab/vhdl-forge-3v0.git
+cd vhdl-forge-3v0
+./scripts/setup.sh
+```
+
+The setup script will:
+- Check all prerequisites (GHDL, Python, uv)
+- Install Python dependencies
+- Install workspace packages in editable mode
+- Verify installation
+
+**Option 2: Manual Setup**
 ```bash
 git clone https://github.com/sealablab/vhdl-forge-3v0.git
 cd vhdl-forge-3v0
 uv sync
+uv pip install -e python/forge_cocotb -e python/forge_platform -e python/forge_tools
+```
+
+**Verify Installation:**
+```bash
+./scripts/validate_setup.sh
 ```
 
 ### Your First FORGE Instrument

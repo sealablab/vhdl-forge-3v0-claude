@@ -55,10 +55,12 @@ htmlcov/
 sim_build/
 cocotb_tests/sim_build/
 tests/sim_build/
+examples/*/sim_build/
 *.vcd
 *.ghw
 *.cf
 work-obj*.cf
+*.fst.hier  # GHDL FST hierarchy files
 
 # GHDL compilation
 *_tb
