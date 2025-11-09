@@ -42,7 +42,9 @@ output filtering + progressive test levels (P1/P2/P3/P4).
 #### Development Workflow
 
 ```
-0. forge-new-component (NEW!)
+Requirements Gathering (/gather-requirements)
+   ↓ (Complete specification document)
+0. forge-new-component (OPTIONAL)
    ↓ (Placeholder .md files with specifications)
 1. forge-vhdl-component-generator
    ↓ (VHDL component entity/architecture)
@@ -55,14 +57,23 @@ output filtering + progressive test levels (P1/P2/P3/P4).
 
 **Each agent knows its neighbors and handoff patterns:**
 
-**Step 0: New Component Planner** (`.claude/forge-new-component.md`) ⭐ NEW!
-- **Role:** Requirements elicitation and file structure scaffolding
-- **Modes:** Interactive Q&A, placeholder markdown generation
-- **Scope:** Project planning (pre-implementation)
+**Requirements Gathering: /gather-requirements** (`.claude/commands/gather-requirements.md`) ⭐ NEW!
+- **Role:** Interactive requirements elicitation via structured Q&A
+- **Modes:** 7-phase interview (identification → functionality → interface → behavior → testing → design → generation)
+- **Scope:** Pre-planning (before any implementation)
+- **Outputs:** Complete specification in `workflow/specs/pending/[component].md`
+- **Features:** Standards validation, guided questions, educational feedback
+- **Handoff to:** Automated 4-agent workflow OR manual implementation
+- **Usage:** `/gather-requirements` - Start here for ALL new components!
+
+**Step 0: New Component Planner** (`.claude/agents/forge-new-component/agent.md`)
+- **Role:** File structure scaffolding from specifications
+- **Modes:** Placeholder generation from existing specs
+- **Scope:** Project planning (converts specs to placeholders)
+- **Inputs:** Specification documents (from /gather-requirements or manual)
 - **Outputs:** Markdown placeholder files (.vhd.md, .py.md) with detailed specs
 - **Handoff to:** forge-vhdl-component-generator + cocotb-progressive-test-designer (parallel)
-- **Agent file:** `.claude/forge-new-component.md`
-- **Usage:** Start here for new components! Creates the plan before implementation.
+- **Usage:** OPTIONAL - Use when you want placeholder-driven workflow instead of direct implementation.
 
 **Placeholder Pattern:**
 - Placeholder files use `.md` extension: `forge_util_pwm.vhd.md`
@@ -97,52 +108,76 @@ output filtering + progressive test levels (P1/P2/P3/P4).
 
 #### Quick Start Patterns
 
-**Pattern 1: New Component (Start with Planning)**
+**Pattern 1: New Component (Recommended - Start with Requirements Gathering)**
 ```
-User: "I need a PWM generator"
+User: Types "/gather-requirements"
   ↓
-Step 0: forge-new-component
-  - Asks: Frequency range? Duty cycle resolution? Interfaces?
-  - Creates: forge_util_pwm.vhd.md, P1_forge_util_pwm_basic.py.md, etc.
+Requirements Gathering (Interactive Q&A)
+  - Phase 1: Component identification
+  - Phase 2: Functionality deep dive
+  - Phase 3: Interface specification
+  - Phase 4: Behavior specification
+  - Phase 5: Testing strategy
+  - Phase 6: Design guidance
+  - Phase 7: Specification generation
+  - Creates: workflow/specs/pending/forge_util_pwm.md
   ↓
-Step 1: forge-vhdl-component-generator
-  - Reads: forge_util_pwm.vhd.md
-  - Creates: forge_util_pwm.vhd (removes .md)
+User: Reviews spec, then runs automated workflow
   ↓
-Step 2: cocotb-progressive-test-designer
-  - Reads: forge_util_pwm.vhd + test placeholders
-  - Creates: Test architecture + constants file
+Agents 1-3: Execute in sequence
+  - Agent 1: Generates forge_util_pwm.vhd
+  - Agent 2: Designs test architecture
+  - Agent 3: Implements and runs P1 tests
+  - Outputs: workflow/artifacts/vhdl/ and workflow/artifacts/tests/
   ↓
-Step 3: cocotb-progressive-test-runner
-  - Reads: Test architecture
-  - Creates: P1_forge_util_pwm_basic.py (removes .md)
-  - Runs: Tests and debugs
+User: Reviews artifacts, moves to main codebase
 ```
 
-**Pattern 2: Direct Implementation (Requirements Clear)**
+**Pattern 2: Using Example Specs (Fast Start)**
+```
+User: Browses workflow/specs/pending/ directory
+  - edge_detector.md (ready to use)
+  - synchronizer.md (ready to use)
+  - debouncer.md (ready to use)
+  - pulse_stretcher.md (ready to use)
+  ↓
+User: "Read workflow/specs/pending/edge_detector.md and execute the complete 4-agent workflow"
+  ↓
+Agents 1-3: Generate VHDL + tests automatically
+  ↓
+User: Reviews and integrates
+```
+
+**Pattern 3: Direct Implementation (Requirements Crystal Clear)**
 ```
 User: "Generate VHDL for 16-bit up/down counter with overflow"
   ↓
-Step 1: forge-vhdl-component-generator
+Agent 1: forge-vhdl-component-generator
   - Direct spec → forge_util_counter.vhd
   ↓
-Step 2: cocotb-progressive-test-designer
+Agent 2: cocotb-progressive-test-designer
   - Analyzes VHDL → Test architecture
   ↓
-Step 3: cocotb-progressive-test-runner
+Agent 3: cocotb-progressive-test-runner
   - Implements and runs tests
 ```
 
-**When to use forge-new-component:**
-- ✅ Complex components with unclear requirements
-- ✅ Multiple related files needed (entity + wrapper + multiple test levels)
-- ✅ Want to plan structure before implementation
-- ✅ Coordinating multiple agents (parallel VHDL + test development)
+**When to use /gather-requirements:**
+- ✅ ALL new components (recommended as default)
+- ✅ Requirements are unclear or incomplete
+- ✅ Want structured, validated specification
+- ✅ Learning VHDL-FORGE standards and patterns
+- ✅ Need educational guidance through design process
 
-**When to skip forge-new-component:**
-- ❌ Simple, well-defined components
-- ❌ Single file implementations
-- ❌ Requirements already crystal clear
+**When to use example specs:**
+- ✅ Similar component already specified (edge detector, synchronizer, etc.)
+- ✅ Want to see complete specification examples
+- ✅ Fast prototyping with proven patterns
+
+**When to skip requirements gathering:**
+- ❌ Requirements already documented in detail
+- ❌ Trivial, single-purpose utility
+- ❌ Exact copy of existing component with minor changes
 
 ---
 
@@ -799,7 +834,29 @@ Cost per test: $0.001 (GPT-4)
 
 ## Development Workflow
 
-### Adding New Component
+### Adding New Component (Recommended Workflow)
+
+**Step 1: Requirements Gathering**
+1. Type `/gather-requirements` in Claude Code
+2. Answer 7-phase Q&A session
+3. Review generated spec in `workflow/specs/pending/[component].md`
+4. Edit/refine if needed
+
+**Step 2: Automated Implementation**
+1. Run: "Read workflow/specs/pending/[component].md and execute the complete 4-agent workflow"
+2. Agents generate VHDL + tests in `workflow/artifacts/`
+3. Review artifacts (VHDL quality, test coverage)
+
+**Step 3: Integration**
+1. Move VHDL: `workflow/artifacts/vhdl/` → `vhdl/components/[category]/`
+2. Move tests: `workflow/artifacts/tests/` → `cocotb_tests/components/`
+3. Run P1 tests, ensure <20 line output
+4. Commit in repository with descriptive message
+5. Update `llms.txt` catalog
+6. Add component section to this `CLAUDE.md`
+7. Move spec to `workflow/specs/completed/` (archive)
+
+### Adding New Component (Manual Workflow)
 
 1. Write VHDL component in appropriate `vhdl/` subdirectory
 2. Create CocoTB test using template
@@ -957,11 +1014,21 @@ end process;
 **In `scripts/`:**
 - `GHDL_FILTER.md` - Filter implementation details (for debugging filter)
 
+**In `workflow/`:**
+- `workflow/README.md` - Complete workflow guide (staging area usage)
+- `workflow/specs/README.md` - Specification writing guide
+- `workflow/specs/pending/README.md` - Using pending specifications
+- `REQUIREMENTS_WORKFLOW_SUMMARY.md` - Requirements gathering system overview
+
+**In `.claude/commands/`:**
+- `README.md` - Slash commands reference
+- `gather-requirements.md` - Interactive requirements gathering prompt
+
 **In parent monorepo:**
 - `../../.claude/shared/ARCHITECTURE_OVERVIEW.md` - Hierarchical architecture
 
 ---
 
-**Last Updated:** 2025-11-04
+**Last Updated:** 2025-11-08
 **Maintainer:** Moku Instrument Forge Team
-**Version:** 2.0.0
+**Version:** 2.1.0 (added requirements gathering workflow)

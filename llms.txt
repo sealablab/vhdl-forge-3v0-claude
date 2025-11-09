@@ -82,14 +82,21 @@ docs/               # Testing standards, guides, patterns
 
 ### Development Workflow
 
-**0. New Component Planner** → **1. Component Generator** → **2. Test Designer** → **3. Test Runner**
+**Requirements Gathering** → **0. New Component Planner** → **1. Component Generator** → **2. Test Designer** → **3. Test Runner**
 
-**Step 0: forge-new-component** (`.claude/forge-new-component.md`) ⭐ NEW!
-- **Purpose:** Requirements elicitation and file structure scaffolding
-- **Modes:** Interactive Q&A, placeholder generation
+**Slash Command: /gather-requirements** (`.claude/commands/gather-requirements.md`) ⭐ NEW!
+- **Purpose:** Interactive requirements gathering session
+- **Output:** Complete component specification in `workflow/specs/pending/`
+- **Process:** 7-phase Q&A (identification, functionality, interface, behavior, testing, design, generation)
+- **Features:** Standards validation, guided questions, educational
+- **Usage:** Start here for new components! Creates detailed spec before implementation.
+
+**Step 0: forge-new-component** (`.claude/agents/forge-new-component/agent.md`)
+- **Purpose:** File structure scaffolding from specifications
+- **Modes:** Placeholder generation from specs
 - **Outputs:** Markdown placeholder files (.vhd.md, .py.md) with specifications
 - **Next:** Hand off to Component Generator + Test Designer (parallel)
-- **Usage:** Start here for new components! Creates the plan before implementation.
+- **Usage:** Converts specs into placeholder files for agent workflow.
 
 **Step 1: forge-vhdl-component-generator** (`.claude/forge-vhdl-component-generator.md`)
 - **Purpose:** VHDL-2008 code generation with GHDL simulation awareness
@@ -114,15 +121,23 @@ docs/               # Testing standards, guides, patterns
 
 ### Quick Start Pattern
 
-**For brand new components:**
-1. **forge-new-component** - "I want a PWM generator" → Creates placeholders
-2. **forge-vhdl-component-generator** - Reads .vhd.md → Creates .vhd
-3. **cocotb-progressive-test-designer** - Reads .py.md → Designs tests
-4. **cocotb-progressive-test-runner** - Reads architecture → Implements tests
+**For brand new components (recommended):**
+1. `/gather-requirements` - Interactive Q&A → Creates `workflow/specs/pending/component.md`
+2. **Automated workflow** - Run 4-agent workflow on spec → Generates VHDL + tests
+3. **Review artifacts** - Check `workflow/artifacts/vhdl/` and `workflow/artifacts/tests/`
+4. **Integrate** - Move to main codebase when satisfied
 
-**For direct implementation (requirements already clear):**
+**Using example specs (fast):**
+- 4 ready-to-use specs in `workflow/specs/pending/`:
+  - `edge_detector.md` - Edge detection utility
+  - `synchronizer.md` - CDC metastability mitigation
+  - `debouncer.md` - Button debouncing
+  - `pulse_stretcher.md` - Pulse width extension
+- Run: "Read workflow/specs/pending/edge_detector.md and execute the complete 4-agent workflow"
+
+**For direct implementation (requirements crystal clear):**
 1. **forge-vhdl-component-generator** - Direct spec → Creates .vhd
-2. **cocotb-progressive-test-designer** - Analyzes .vhd → Designs tests
+2. **cocotb-progressive-test-designer** - Analyzes .vhl → Designs tests
 3. **cocotb-progressive-test-runner** - Implements tests
 
 ## Testing (NEW!)
@@ -178,7 +193,7 @@ uv run python tests/run.py --all
 
 **Three-tier documentation system optimized for token efficiency:**
 
-**Tier 1 (Quick Ref):** This file (llms.txt) - ~500 tokens
+**Tier 1 (Quick Ref):** This file (llms.txt) - ~800 tokens
 - Component catalog
 - Basic usage examples
 - Pointers to Tier 2
@@ -196,9 +211,16 @@ uv run python tests/run.py --all
 - `docs/COCOTB_TROUBLESHOOTING.md` - Problem→Solution debugging
 - `scripts/GHDL_FILTER.md` - Filter implementation details
 
+**Workflow Documentation:**
+- `workflow/specs/README.md` - Specification writing guide
+- `workflow/README.md` - Complete workflow guide
+- `.claude/commands/README.md` - Slash commands reference
+- `REQUIREMENTS_WORKFLOW_SUMMARY.md` - Requirements gathering system overview
+
 **Navigation pattern:**
 - Quick question? → Read llms.txt (this file)
 - Design/testing question? → Read CLAUDE.md
+- Workflow question? → Read workflow/README.md
 - Specific error/deep dive? → Read Tier 3 docs
 
 ---
