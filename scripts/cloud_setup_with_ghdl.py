@@ -115,6 +115,16 @@ def install_ghdl() -> bool:
         run_command("apt-get install -y -qq ghdl ghdl-llvm llvm-18", check=True, capture=False)
         print()
 
+        # Create LLVM library symlink (Ubuntu doesn't do this automatically)
+        print("Creating LLVM library symlink for GHDL...")
+        run_command(
+            "ln -sf /usr/lib/llvm-18/lib/libLLVM.so.1 /usr/lib/x86_64-linux-gnu/libLLVM-18.so.18.1",
+            check=True,
+            capture=False
+        )
+        print_success("LLVM library symlink created")
+        print()
+
         # Verify installation
         exit_code, stdout, stderr = run_command("ghdl --version", check=False)
         if exit_code == 0:
