@@ -13,7 +13,7 @@
     }
   },
 
-  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\"$HOME/.cargo/bin:$PATH\" && uv run python scripts/cloud_setup_with_ghdl.py",
+  "postCreateCommand": "apt-get update && apt-get install -y llvm-18 && curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\"$HOME/.cargo/bin:$PATH\" && uv run python scripts/cloud_setup_with_ghdl.py",
 
   "customizations": {
     "vscode": {

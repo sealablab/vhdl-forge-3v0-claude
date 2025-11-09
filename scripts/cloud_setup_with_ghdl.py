@@ -110,9 +110,9 @@ def install_ghdl() -> bool:
         run_command("apt-get update -qq", check=True, capture=False)
         print()
 
-        # Install GHDL
-        print("Installing GHDL and dependencies...")
-        run_command("apt-get install -y -qq ghdl ghdl-llvm", check=True, capture=False)
+        # Install GHDL and LLVM 18 runtime
+        print("Installing GHDL, LLVM 18, and dependencies...")
+        run_command("apt-get install -y -qq ghdl ghdl-llvm llvm-18", check=True, capture=False)
         print()
 
         # Verify installation
