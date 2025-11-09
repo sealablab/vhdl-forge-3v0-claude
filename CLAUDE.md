@@ -16,6 +16,30 @@ output filtering + progressive test levels (P1/P2/P3/P4).
 
 ---
 
+## Quick Start: Cloud Setup
+
+**For GitHub Codespaces / Claude Code Web / Docker environments:**
+
+```bash
+uv run python scripts/cloud_setup_with_ghdl.py
+```
+
+This automated setup script:
+- ✅ Auto-installs GHDL + LLVM 18 (Ubuntu/Debian)
+- ✅ Creates LLVM library symlink (critical for GHDL-LLVM)
+- ✅ Sets up Python virtual environment with UV
+- ✅ Installs workspace packages in editable mode
+- ✅ Validates environment with sample test
+- ✅ Reports readiness status (~3-5 minutes)
+
+**Validation:** Expected to pass 5/10 tests (50% baseline - see `docs/CLOUD_SETUP_PROMPT.md`)
+
+**Troubleshooting:** See `docs/diagnostic_reports/` for known issues and fixes.
+
+**Local development:** Requires pre-installed GHDL (`brew install ghdl` or `apt-get install ghdl`)
+
+---
+
 ## Architecture
 
 ### Three-Tier Documentation Pattern

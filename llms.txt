@@ -163,12 +163,33 @@ git submodule add https://github.com/sealablab/moku-instrument-forge-vhdl.git li
 
 VHDL files compiled with GHDL via CocoTB test infrastructure.
 
-## Development
+## Cloud Setup (For GitHub Codespaces / Claude Code Web)
+
+**🚀 Automated setup with GHDL installation:**
+
+```bash
+uv run python scripts/cloud_setup_with_ghdl.py
+```
+
+This script will:
+- Auto-install GHDL + LLVM 18 (Ubuntu/Debian)
+- Create LLVM library symlink (critical!)
+- Set up Python packages in editable mode
+- Validate environment with tests
+- Report readiness status
+
+**See:** `docs/CLOUD_SETUP_PROMPT.md` for detailed cloud deployment guide.
+
+## Local Development
 
 ```bash
 uv sync                          # Install dependencies
 uv run python tests/run.py --all # Run all tests (P1)
 ```
+
+**Note:** Local development requires GHDL to be pre-installed:
+- Ubuntu/Debian: `sudo apt-get install ghdl`
+- macOS: `brew install ghdl`
 
 ## Testing Quick Start
 
