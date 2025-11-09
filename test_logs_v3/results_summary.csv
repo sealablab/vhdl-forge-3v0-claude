@@ -1,0 +1,11 @@
+test_name|category|status|duration|expected|failure_type
+forge_util_clk_divider|utilities|PASS|2s|PASS|
+forge_lut_pkg|packages|FAIL|0s|FAIL|VHDL_ERROR
+forge_voltage_3v3_pkg|packages|PASS|1s|PASS|
+forge_voltage_5v0_pkg|packages|PASS|2s|PASS|
+forge_voltage_5v_bipolar_pkg|packages|PASS|1s|PASS|
+forge_hierarchical_encoder|debugging|PASS|1s|PASS|
+platform_bpd_deployment|platform|FAIL|0s|FAIL|MISSING_SOURCE
+platform_counter_poc|platform|FAIL|0s|FAIL|MISSING_SOURCE
+platform_oscilloscope_capture|platform|FAIL|0s|FAIL|MISSING_SOURCE
+platform_routing_integration|platform|FAIL|0s|FAIL|MISSING_SOURCE
