@@ -13,7 +13,7 @@
     }
   },
 
-  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\"$HOME/.cargo/bin:$PATH\" && uv sync && ghdl --version",
+  "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\"$HOME/.cargo/bin:$PATH\" && uv run python scripts/cloud_setup_with_ghdl.py",
 
   "customizations": {
     "vscode": {
@@ -50,7 +50,7 @@
 
   "onCreateCommand": "echo 'VHDL-FORGE 3.0 Container Created'",
 
-  "updateContentCommand": "uv sync",
+  "updateContentCommand": "uv run python scripts/cloud_setup_with_ghdl.py",
 
   "postAttachCommand": "echo '✅ VHDL-FORGE 3.0 Ready! Run: uv run python cocotb_tests/run.py --list'"
 }
